@@ -1,0 +1,17 @@
+ul {
+	max-height: 100px;
+	width: 200px;
+	overflow: scroll;
+	overflow-x: hidden;
+	margin: 0;
+	position: absolute;
+	top: 25px;
+	left: 380px;
+	z-index: 1;
+	background-color: white;
+	padding: 0;
+}
+
+li {
+	list-style-type: none;
+}

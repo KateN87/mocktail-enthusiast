@@ -10,7 +10,7 @@ const DrinkBox = ({ drink }) => {
 	};
 
 	return (
-		<div>
+		<div className="drink-container">
 			<h1>{drink.strDrink}</h1>
 			<img src={drink.strDrinkThumb} alt="mocktail" />
 			<button onClick={handleAdd}>Add</button>

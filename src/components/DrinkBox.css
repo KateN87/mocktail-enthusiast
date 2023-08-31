@@ -1,0 +1,27 @@
+.drink-container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+button {
+	margin: 10px;
+	width: 100px;
+	font-size: 20px;
+	font-weight: 600;
+	color: #f4d35e;
+	background-color: #3bc0c0;
+	border-radius: 5px;
+	border: 2px solid #ee964b;
+	box-shadow: 2px 2px 4px grey;
+	cursor: pointer;
+}
+button:active {
+	box-shadow: 0px 2px grey;
+	transform: translateY(2px);
+}
+
+img {
+	border-radius: 10px;
+	width: 200px;
+}
