@@ -6,17 +6,35 @@ export function DrinkProvider({ children }) {
 	const [drinks, setDrinks] = useState([]);
 
 	const addDrink = (drink) => {
-		setDrinks((prev) => [...prev, drink]);
-		console.log(drinks);
+		setDrinks((prev) => [...prev, { ...drink, done: false }]);
+		console.log("ADDED", drinks);
 	};
 
-	const testFunc = () => {
-		console.log("Hello");
+	const doneDrink = (pickedDrink) => {
+		const updatedDrinksArray = drinks.map((drink) => {
+			if (drink.idDrink === pickedDrink.idDrink) {
+				return { ...drink, done: true };
+			} else {
+				return drink;
+			}
+		});
+		setDrinks(updatedDrinksArray);
+	};
+
+	const deleteDrink = (pickedDrink) => {
+		console.log("PICKED", pickedDrink);
+		const updatedDrinksArray = drinks.filter(
+			(drink) => drink.idDrink !== pickedDrink.idDrink
+		);
+		console.log(updatedDrinksArray);
+		setDrinks(updatedDrinksArray);
 	};
 
 	const value = {
 		addDrink,
-		testFunc,
+		doneDrink,
+		deleteDrink,
+		drinks,
 	};
 
 	return (

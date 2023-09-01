@@ -1,19 +1,13 @@
-import { useContext } from "react";
 import "./DrinkBox.css";
-import { DrinkContext } from "../context/drinkCtxt";
 
-const DrinkBox = ({ drink }) => {
-	const { addDrink } = useContext(DrinkContext);
-
-	const handleAdd = () => {
-		addDrink(drink);
-	};
-
+const DrinkBox = ({ drink, clickHandler, buttonText }) => {
 	return (
 		<div className="drink-container">
-			<h1>{drink.strDrink}</h1>
+			<h3>{drink.strDrink}</h3>
 			<img src={drink.strDrinkThumb} alt="mocktail" />
-			<button onClick={handleAdd}>Add</button>
+			<div className="button-container">
+				<button onClick={clickHandler}>{buttonText}</button>
+			</div>
 		</div>
 	);
 };

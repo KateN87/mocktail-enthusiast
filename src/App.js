@@ -1,14 +1,20 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useContext } from "react";
 import "./App.css";
 import DrinkBox from "./components/DrinkBox";
 import SearchList from "./components/SearchList";
+import FormContainer from "./components/FormContainer";
+import MyDrinksBox from "./components/MyDrinksBox";
+import { DrinkContext } from "./context/drinkCtxt";
 
 function App() {
+	const { addDrink } = useContext(DrinkContext);
 	const [searchVal, setSearchVal] = useState("");
 	const [foundDrink, setFoundDrink] = useState();
 	const [error, setError] = useState("");
 	const [allDrinks, setAllDrinks] = useState([]);
 	const [showList, setShowList] = useState(false);
+
+	const searchListRef = useRef(null);
 
 	useEffect(() => {
 		const getDrinks = async () => {
@@ -23,24 +29,32 @@ function App() {
 		getDrinks();
 	}, []);
 
-	/* 	const containerRef = useRef(null);
-
 	useEffect(() => {
-		const handleClickOutside = (event) => {
+		// Add a click event listener to the document
+		const handleClickOutside = (e) => {
 			if (
-				containerRef.current &&
-				!containerRef.current.contains(event.target)
+				searchListRef.current &&
+				!searchListRef.current.contains(e.target)
 			) {
+				// Click occurred outside the SearchList component
 				setShowList(false);
 			}
 		};
 
-		document.addEventListener("click", handleClickOutside);
+		// Attach the event listener when showList is true
+		let timeoutId;
+		if (showList) {
+			timeoutId = setTimeout(() => {
+				document.addEventListener("click", handleClickOutside);
+			}, 0);
+		}
 
+		// Remove the event listener when component unmounts or showList becomes false
 		return () => {
+			clearTimeout(timeoutId);
 			document.removeEventListener("click", handleClickOutside);
 		};
-	}, []); */
+	}, [showList]);
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
@@ -58,7 +72,7 @@ function App() {
 		setSearchVal("");
 	};
 
-	const clickHandler = (drink) => {
+	const chooseHandler = (drink) => {
 		setFoundDrink(drink);
 		setSearchVal(drink.strDrink);
 		setShowList(false);
@@ -68,35 +82,31 @@ function App() {
 		<div className="App">
 			<h1>Kate's To-Drink List</h1>
 			<div className="form-container">
-				<form onSubmit={handleSubmit}>
-					<label htmlFor="search">Search:</label>
-					<input
-						placeholder="Search a drink..."
-						type="text"
-						id="search"
-						value={searchVal}
-						onChange={(e) =>
-							setSearchVal(e.target.value.trim().toLowerCase())
-						}
-						onClick={() => setShowList(true)}
-						autoComplete="off"
-					/>
-					<input type="submit" value="Submit" />
-				</form>
-
-				{!error && !foundDrink && !showList && (
-					<p>Search for a drink!</p>
-				)}
-				{error && !foundDrink && <p>{error}</p>}
-				{foundDrink && <DrinkBox drink={foundDrink} />}
+				<FormContainer
+					handleSubmit={handleSubmit}
+					searchVal={searchVal}
+					setSearchVal={setSearchVal}
+					setShowList={setShowList}
+				/>
 				{showList && allDrinks.length > 0 && (
-					<SearchList
-						allDrinks={allDrinks}
-						clickHandler={clickHandler}
-						input={searchVal}
-					/>
+					<div ref={searchListRef}>
+						<SearchList
+							allDrinks={allDrinks}
+							clickHandler={chooseHandler}
+							input={searchVal}
+						/>
+					</div>
 				)}
 			</div>
+			{error && !foundDrink && <p>{error}</p>}
+			{foundDrink && (
+				<DrinkBox
+					drink={foundDrink}
+					clickHandler={() => addDrink(foundDrink)}
+					buttonText="Add"
+				/>
+			)}
+			<MyDrinksBox />
 		</div>
 	);
 }

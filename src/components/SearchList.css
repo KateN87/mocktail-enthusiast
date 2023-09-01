@@ -1,14 +1,15 @@
 ul {
 	max-height: 100px;
-	width: 200px;
+	width: 260px;
 	overflow: scroll;
 	overflow-x: hidden;
 	margin: 0;
 	position: absolute;
-	top: 25px;
-	left: 380px;
+	top: 100%;
+	left: 50%; /* Move the ul to the center horizontally */
+	transform: translateX(-38%);
 	z-index: 1;
-	background-color: white;
+	background-color: #b3ecec;
 	padding: 0;
 }
 
