@@ -22,7 +22,6 @@ export function DrinkProvider({ children }) {
 	};
 
 	const deleteDrink = (pickedDrink) => {
-		console.log("PICKED", pickedDrink);
 		const updatedDrinksArray = drinks.filter(
 			(drink) => drink.idDrink !== pickedDrink.idDrink
 		);
@@ -30,10 +29,15 @@ export function DrinkProvider({ children }) {
 		setDrinks(updatedDrinksArray);
 	};
 
+	const deleteAll = () => {
+		setDrinks([]);
+	};
+
 	const value = {
 		addDrink,
 		doneDrink,
 		deleteDrink,
+		deleteAll,
 		drinks,
 	};
 

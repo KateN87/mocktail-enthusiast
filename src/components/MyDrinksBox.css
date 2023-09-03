@@ -21,9 +21,34 @@
 	text-decoration: line-through;
 }
 
+.filter-container {
+	display: flex;
+	justify-content: center;
+}
+.filter-container p {
+	font-size: 15px;
+	/* margin-right: 10px; */
+}
+.filter-container button {
+	background: transparent;
+	border: 0;
+	font-family: inherit;
+
+	cursor: pointer;
+	font-size: 15px;
+	color: black;
+	border: none;
+	box-shadow: none;
+}
+
+.filter-container button.active {
+	font-size: 18px;
+	font-weight: bold;
+	text-decoration: underline;
+}
+
 .small-btn {
 	margin: 10px;
-	/* width: 60px; */
 	font-size: 15px;
 	font-weight: 600;
 	color: #f4d35e;
@@ -32,11 +57,6 @@
 	border: 2px solid #ee964b;
 	box-shadow: 2px 2px 4px grey;
 	cursor: pointer;
-}
-
-button:active {
-	box-shadow: 0px 2px grey;
-	transform: translateY(2px);
 }
 
 .small-img {

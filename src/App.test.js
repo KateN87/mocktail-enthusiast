@@ -1,9 +1,11 @@
-import { render, screen, act } from "@testing-library/react";
+import { render, screen, act, waitFor } from "@testing-library/react";
 import App from "./App";
 import { rest } from "msw";
 import { setupServer } from "msw/node";
 import userEvent from "@testing-library/user-event";
 import { DrinkProvider } from "./context/drinkCtxt";
+import FormContainer from "./components/FormContainer";
+import SearchList from "./components/SearchList";
 
 const server = setupServer(
 	// Describe the requests to mock.
@@ -42,54 +44,155 @@ const server = setupServer(
 beforeAll(() => server.listen());
 afterAll(() => server.close());
 
-it("render page with searchbar", () => {
-	render(<App />);
-	expect(
-		screen.getByPlaceholderText("Search a drink...")
-	).toBeInTheDocument();
+describe("Search drink test", () => {
+	it("render page with searchbar", () => {
+		render(<FormContainer />);
+		expect(
+			screen.getByPlaceholderText("Drink name...")
+		).toBeInTheDocument();
+	});
+
+	it("Shows list of drinks when clicked", async () => {
+		const user = userEvent.setup();
+		render(
+			<DrinkProvider>
+				{" "}
+				<App />
+			</DrinkProvider>
+		);
+
+		const searchBar = screen.getByPlaceholderText("Drink name...");
+		await act(async () => await user.click(searchBar));
+
+		expect(await screen.findAllByRole("listitem")).toHaveLength(3);
+	});
+
+	it("Shows clicked drink in searchbar", async () => {
+		const user = userEvent.setup();
+		render(
+			<DrinkProvider>
+				{" "}
+				<App />
+			</DrinkProvider>
+		);
+
+		const searchBar = screen.getByPlaceholderText("Drink name...");
+		await act(async () => await user.click(searchBar));
+		const drinkName = screen.getByText("Afterglow");
+
+		await act(async () => await user.click(drinkName));
+
+		expect(screen.getByDisplayValue("Afterglow")).toBeInTheDocument();
+	});
+
+	it("Shows a drink in the drinkbox", async () => {
+		const user = userEvent.setup();
+		render(
+			<DrinkProvider>
+				{" "}
+				<App />
+			</DrinkProvider>
+		);
+
+		const searchBar = screen.getByPlaceholderText("Drink name...");
+		await act(async () => await user.click(searchBar));
+		const drinkName = screen.getByText("Afterglow");
+
+		await act(async () => await user.click(drinkName));
+
+		const submitButton = screen.getByDisplayValue("Submit");
+		await act(async () => await user.click(submitButton));
+
+		expect(await screen.findByAltText("mocktail")).toBeInTheDocument();
+	});
 });
 
-it("Shows list of drinks when clicked", async () => {
-	const user = userEvent.setup();
+describe("Mt drinks", () => {
+	it("My drinks title is shown", () => {
+		render(
+			<DrinkProvider>
+				{" "}
+				<App />
+			</DrinkProvider>
+		);
 
-	render(<App />);
+		const title = screen.getByText("My Drink", { exact: false });
+		expect(title).toBeInTheDocument();
+	});
 
-	const searchBar = screen.getByPlaceholderText("Search a drink...");
-	await act(async () => await user.click(searchBar));
+	it("shows a drink i my drinks list when clicked", async () => {
+		const user = userEvent.setup();
+		render(
+			<DrinkProvider>
+				{" "}
+				<App />
+			</DrinkProvider>
+		);
 
-	expect(await screen.findAllByRole("listitem")).toHaveLength(3);
-});
+		const searchBar = screen.getByPlaceholderText("Drink name...");
+		await act(async () => await user.click(searchBar));
+		const drinkName = screen.getByText("Afterglow");
 
-it("Shows clicked drink in searchbar", async () => {
-	const user = userEvent.setup();
-	render(<App />);
+		await act(async () => await user.click(drinkName));
 
-	const searchBar = screen.getByPlaceholderText("Search a drink...");
-	await act(async () => await user.click(searchBar));
-	const drinkName = screen.getByText("Afterglow");
+		const submitButton = screen.getByDisplayValue("Submit");
+		await act(async () => await user.click(submitButton));
 
-	await act(async () => await user.click(drinkName));
+		const addBtn = screen.getByText("Add", { exact: false });
+		await act(async () => await user.click(addBtn));
 
-	expect(screen.getByDisplayValue("Afterglow")).toBeInTheDocument();
-});
+		const deleteBtn = screen.getByRole("button", { name: "Delete" });
 
-it("Shows a drink in the drinkbox", async () => {
-	const user = userEvent.setup();
-	render(
-		<DrinkProvider>
-			{" "}
-			<App />
-		</DrinkProvider>
-	);
+		expect(deleteBtn).toBeInTheDocument();
+	});
 
-	const searchBar = screen.getByPlaceholderText("Search a drink...");
-	await act(async () => await user.click(searchBar));
-	const drinkName = screen.getByText("Afterglow");
+	it("Removes item when delete-btn is clicked", async () => {
+		const user = userEvent.setup();
+		render(
+			<DrinkProvider>
+				{" "}
+				<App />
+			</DrinkProvider>
+		);
 
-	await act(async () => await user.click(drinkName));
+		const searchBar = screen.getByPlaceholderText("Drink name...");
+		await act(async () => await user.click(searchBar));
+		const drinkName = screen.getByText("Afterglow");
 
-	const submitButton = screen.getByDisplayValue("Submit");
-	await act(async () => await user.click(submitButton));
+		await act(async () => await user.click(drinkName));
 
-	expect(await screen.findByAltText("mocktail")).toBeInTheDocument();
+		const submitButton = screen.getByDisplayValue("Submit");
+		await act(async () => await user.click(submitButton));
+
+		const deleteBtn = screen.queryByText("Delete", { exact: true });
+		await act(async () => await user.click(deleteBtn));
+
+		await waitFor(() => expect(deleteBtn).toBeNull());
+	});
+
+	it("Crosses the drink over when addBtn is being clicked", async () => {
+		const user = userEvent.setup();
+		render(
+			<DrinkProvider>
+				{" "}
+				<App />
+			</DrinkProvider>
+		);
+
+		const searchBar = screen.getByPlaceholderText("Drink name...");
+		await act(async () => await user.click(searchBar));
+		const drinkName = screen.getByText("Afterglow");
+
+		await act(async () => await user.click(drinkName));
+
+		const submitButton = screen.getByDisplayValue("Submit");
+		await act(async () => await user.click(submitButton));
+
+		const addBtn = screen.getByText("Add", { exact: false });
+		await act(async () => await user.click(addBtn));
+
+		const doneBtn = screen.getByRole("button", { name: "Done?" });
+
+		await waitFor(() => expect(doneBtn).toBeInTheDocument());
+	});
 });
