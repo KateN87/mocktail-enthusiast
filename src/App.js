@@ -7,7 +7,7 @@ import MyDrinksBox from "./components/MyDrinksBox";
 import { DrinkContext } from "./context/drinkCtxt";
 
 function App() {
-	const { addDrink } = useContext(DrinkContext);
+	const { addDrink, drinks } = useContext(DrinkContext);
 	const [searchVal, setSearchVal] = useState("");
 	const [foundDrink, setFoundDrink] = useState();
 	const [error, setError] = useState("");
@@ -106,7 +106,7 @@ function App() {
 					buttonText="Add"
 				/>
 			)}
-			<MyDrinksBox />
+			<MyDrinksBox drinks={drinks} />
 		</div>
 	);
 }

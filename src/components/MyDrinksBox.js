@@ -3,9 +3,8 @@ import { DrinkContext } from "../context/drinkCtxt";
 
 import "./MyDrinksBox.css";
 
-const MyDrinksBox = () => {
-	const { drinks, doneDrink, deleteDrink, deleteAll } =
-		useContext(DrinkContext);
+const MyDrinksBox = ({ drinks }) => {
+	const { doneDrink, deleteDrink, deleteAll } = useContext(DrinkContext);
 	const [filter, setFilter] = useState("All");
 
 	const filteredDrinks = drinks?.filter((drink) => {
