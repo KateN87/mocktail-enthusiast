@@ -37,4 +37,4 @@ jobs:
               run: npm ci #npm clean install - does not write to package.json
 
             - name: Run esLint #if npm test throws and error this workflow fails.
-              run: npm run eslint
+              run: npm eslint
