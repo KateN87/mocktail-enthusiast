@@ -75,7 +75,7 @@ describe("Search drink test", () => {
 	it("Shows clicked drink in searchbar", async () => {
 		const user = userEvent.setup();
 		render(
-			<DrinkProvide>
+			<DrinkProvider>
 				{" "}
 				<App />
 			</DrinkProvider>
@@ -176,7 +176,6 @@ describe("Mt drinks", () => {
 	});
 
 	it("Crosses the drink over when addBtn is being clicked", async () => {
-		const unusedVar = "hello";
 		const list = [
 			{
 				idDrink: "12560",
