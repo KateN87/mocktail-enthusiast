@@ -176,6 +176,7 @@ describe("Mt drinks", () => {
 	});
 
 	it("Crosses the drink over when addBtn is being clicked", async () => {
+		const unusedVar = "hello";
 		const list = [
 			{
 				idDrink: "12560",
