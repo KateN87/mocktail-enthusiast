@@ -53,6 +53,10 @@ describe("Search drink test", () => {
 		).toBeInTheDocument();
 	});
 
+	it("always fails", () => {
+		expect(true).toBe(false);
+	});
+
 	it("Shows list of drinks when clicked", async () => {
 		const user = userEvent.setup();
 		render(
@@ -171,7 +175,7 @@ describe("Mt drinks", () => {
 		await waitFor(() => expect(deleteBtn).toBeNull());
 	});
 
-	it.only("Crosses the drink over when addBtn is being clicked", async () => {
+	it("Crosses the drink over when addBtn is being clicked", async () => {
 		const user = userEvent.setup();
 		const list = [
 			{
