@@ -1,10 +1,10 @@
 name: Linting and Testing
 
-on: #this workflow runs on pull requests and pushes to main or master
+on: #this workflow runs on pull requests and pushes to main
     pull_request:
-        branches: [main, master]
+        branches: [main, feature-main-yaml]
     push:
-        branches: [main, master]
+        branches: [main, feature-main-yaml]
 
 #this is a list of all jobs
 jobs:
