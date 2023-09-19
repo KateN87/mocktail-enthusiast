@@ -175,7 +175,7 @@ describe("Mt drinks", () => {
 		await waitFor(() => expect(deleteBtn).toBeNull());
 	});
 
-	it.only("Crosses the drink over when addBtn is being clicked", async () => {
+	it("Crosses the drink over when addBtn is being clicked", async () => {
 		const user = userEvent.setup();
 		const list = [
 			{
