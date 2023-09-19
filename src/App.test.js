@@ -58,7 +58,7 @@ describe("Search drink test", () => {
 	});
 
 	it("Shows list of drinks when clicked", async () => {
-		const user = userEvent.setup();
+		let user = userEvent.setup();
 		render(
 			<DrinkProvider>
 				{" "}
