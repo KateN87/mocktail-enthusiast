@@ -52,7 +52,7 @@ describe("Search drink test", () => {
 			screen.getByPlaceholderText("Drink name...")
 		).toBeInTheDocument();
 	});
-
+	//Added a comment
 	it("always fails", () => {
 		expect(true).toBe(false);
 	});
