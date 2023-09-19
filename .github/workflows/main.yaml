@@ -1,4 +1,4 @@
-name: Linting and Testing
+name: Testing
 
 on: #this workflow runs on pull requests and pushes to main
     pull_request:
