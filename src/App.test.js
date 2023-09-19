@@ -53,6 +53,10 @@ describe("Search drink test", () => {
 		).toBeInTheDocument();
 	});
 
+	it("always fails", () => {
+		expect(true).toBe(false);
+	});
+
 	it("Shows list of drinks when clicked", async () => {
 		const user = userEvent.setup();
 		render(
