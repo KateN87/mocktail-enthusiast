@@ -21,6 +21,9 @@ jobs:
             - name: NPM Install #we now need to install all our dependencies in this environment
               run: npm ci #npm clean install - does not write to package.json
 
+            - name: Run esLint #if npm test throws and error this workflow fails.
+              run: npm run eslint
+
             - name: Run tests #if npm test throws and error this workflow fails.
               run: npm test
     eslint: #name of first job
