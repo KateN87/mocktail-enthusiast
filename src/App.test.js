@@ -1,4 +1,4 @@
-import { render, screen, act, waitFor, within } from "@testing-library/react";
+import { render, screen, act, waitFor } from "@testing-library/react";
 import App from "./App";
 import { rest } from "msw";
 import { setupServer } from "msw/node";
@@ -54,7 +54,7 @@ describe("Search drink test", () => {
 	});
 
 	it("Shows list of drinks when clicked", async () => {
-		const user = userEvent.setup();
+		let user = userEvent.setup();
 		render(
 			<DrinkProvider>
 				{" "}
@@ -172,7 +172,6 @@ describe("Mt drinks", () => {
 	});
 
 	it("Crosses the drink over when addBtn is being clicked", async () => {
-		const user = userEvent.setup();
 		const list = [
 			{
 				idDrink: "12560",

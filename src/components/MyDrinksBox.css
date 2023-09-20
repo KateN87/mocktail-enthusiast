@@ -1,7 +1,6 @@
 .main-container {
 	display: flex;
-	flex-direction: row;
-	flex-wrap: wrap;
+	flex-flow: row wrap;
 	align-items: center;
 	justify-content: center;
 }
@@ -25,19 +24,18 @@
 	display: flex;
 	justify-content: center;
 }
+
 .filter-container p {
 	font-size: 15px;
-	/* margin-right: 10px; */
 }
+
 .filter-container button {
 	background: transparent;
-	border: 0;
+	border: none;
 	font-family: inherit;
-
 	cursor: pointer;
 	font-size: 15px;
 	color: black;
-	border: none;
 	box-shadow: none;
 }
 

@@ -79,7 +79,7 @@ function App() {
 	};
 
 	return (
-		<div className="App">
+		<div className="app">
 			<h1>Kate's To-Drink List</h1>
 			<div className="form-container">
 				<FormContainer
