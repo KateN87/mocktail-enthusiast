@@ -22,7 +22,7 @@ function App() {
 				"https://www.thecocktaildb.com/api/json/v1/1/filter.php?a=Non_Alcoholic"
 			);
 
-			const dat = await resp.json();
+			const data = await resp.json();
 			setAllDrinks([...data.drinks]);
 		};
 
